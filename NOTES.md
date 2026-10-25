@@ -50,3 +50,25 @@ The different kinds of RNNs are based on the `ammount` of `input` and `output`
     - read all throught time and then output -> Language Translation
     - read and output, until through time everything is read -> Word tagging 
     
+### Back Propagation Through time
+
+1. Forward Pass and Total LossUnrolling: An RNN processes a sequence chronologically step-by-step, generating a prediction and a local loss ($J^{(t)}(\theta)$) at each time step.   Total Loss ($J(\theta)$): The overall loss is the average of all individual time-step losses across the sequence length $T$:
+   $$J(\theta) = \frac{1}{T} \sum_{t=1}^{T} J^{(t)}(\theta)$$
+
+2. Backpropagation Through Time (BPTT)
+
+    $$\frac{\partial J}{\partial W_h} = \frac{1}{T} \sum_{t=1}^{T} \sum_{k=1}^{t} \frac{\partial J^{(t)}}{\partial h^{(t)}} \left( \prod_{j=k+1}^{t} \frac{\partial h^{(j)}}{\partial h^{(j-1)}} \right) \frac{\partial h^{(k)}}{\partial W_h}$$
+
+    1. The Outer Sum ($\sum_{t=1}^{T}$): We loop through every time step $t$ where a loss $J^{(t)}$ is calculated because the total loss averages all of them.
+    2. The Inner Sum ($\sum_{k=1}^{t}$): An error at time $t$ flows backward to all preceding time steps $k$ ($1$ up to $t$).
+    3. The Product Chain ($\prod_{j=k+1}^{t}$): This is the bridge across time. To get from the future error at step $t$ back to step $k$, the gradient must multiply the hidden-to-hidden transition derivatives ($\frac{\partial h^{(j)}}{\partial h^{(j-1)}}$) across every intermediate step.
+    3. The Local Derivative ($\frac{\partial h^{(k)}}{\partial W_h}$): At the target step $k$, this connects the hidden state back to the weight $W_h$ we want to update.
+<br/>
+<br/>
+> Vanishing Gradients:
+>
+>  Because BPTT relies on multiplying these hidden-state derivatives ($\prod$) over and over across long time steps, it creates an exponential compounding effect.   
+
+> Exploding Gradients
+>
+>If the derivatives are greater than 1, the gradient grows infinitely, destabilizing training.
