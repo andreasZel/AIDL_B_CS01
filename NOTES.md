@@ -1,6 +1,6 @@
 # Lesson 3
 
-## Recurrent Newral Networks
+## Recurrent Neural Networks
 
 Rnns are networks with hidden layers that `carry information` from the previous hidden layers
 
@@ -35,3 +35,18 @@ For Natural language processing:
 > Disadvantages:
 > - Slow Computation
 > - Serialized Processing, cannot add parallelization
+
+### Kinds of RNNs
+
+The different kinds of RNNs are based on the `ammount` of `input` and `output`
+
+- One to One: Not an RNN, eg. a basic CNN image classification one input, one output
+- One to many: Eg and image to a sentence
+- Many to one: Eg detecting a sentence nature (good or bad)
+- Many to Many:
+    
+    These are again split as to how the iput is processed
+
+    - read all throught time and then output -> Language Translation
+    - read and output, until through time everything is read -> Word tagging 
+    
