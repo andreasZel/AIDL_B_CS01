@@ -101,3 +101,19 @@ added to the state
 
     A sigmoid layer called the “output gate” decides `which values we’ll be passed`
 to the next `hidden and sequence layer`
+
+### Bi-directional LSTM
+
+Core Concept: Processes sequential data in both forward and backward directions simultaneously using two independent LSTM layers.
+
+Forward Pass: Reads the input sequence chronologically from start to finish ($x_1 \to x_T$), capturing past context.
+
+Backward Pass: Reads the input sequence in reverse from end to start ($x_T \to x_1$), capturing future context.
+
+Combination: At each time step $t$, the hidden states from both directions ($\vec{h}_t$ and $\leftarrow{h}_t$) are typically concatenated to form a single combined representation:$$h_t = [\vec{h}_t ; \leftarrow{h}_t]$$
+
+Key Advantage: Allows the model to utilize both preceding and succeeding context for any given data point, greatly improving performance on sequence labeling tasks like Named Entity Recognition (NER).
+
+Dissadvantage: Bad at next-word prediction good for tagging or classification, because we see both start and end we have data leakage in the wanted prediction of the future word.
+
+![biLSTM](/resources/bi-directional_LSTM.png)
