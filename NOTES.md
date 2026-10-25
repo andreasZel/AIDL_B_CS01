@@ -6,7 +6,7 @@ Rnns are networks with hidden layers that `carry information` from the previous 
 
 They can be represented as one block
 
-[!RNN](/resources/RNN.png)
+![RNN](/resources/RNN.png)
 
 For Natural language processing:
 
@@ -72,3 +72,32 @@ The different kinds of RNNs are based on the `ammount` of `input` and `output`
 > Exploding Gradients
 >
 >If the derivatives are greater than 1, the gradient grows infinitely, destabilizing training.
+
+## Long Short-Term Memory (LSTM)
+
+They avoid the vanishing gradient problem by using some gating mechanisms that learn and remember long-term dependencies.
+
+![LSTM](/resources/LSTM.png)
+
+1. Forget gate: 
+
+    Which information we will keep inside the “cell” and which we are going to
+“forget”
+
+    we `multiply` the result to the state, `removing some content`
+
+2. Input Gate
+
+    1. A sigmoid layer called the “input gate” decides `which values we’ll update`.
+
+    2. Next, a tanh layer `creates a vector of new candidate values`, t that could be
+added to the state
+
+    3. We multiply the above
+
+    4. We add the result to the state
+
+3. Output Gate
+
+    A sigmoid layer called the “output gate” decides `which values we’ll be passed`
+to the next `hidden and sequence layer`
