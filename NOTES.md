@@ -117,3 +117,73 @@ Key Advantage: Allows the model to utilize both preceding and succeeding context
 Dissadvantage: Bad at next-word prediction good for tagging or classification, because we see both start and end we have data leakage in the wanted prediction of the future word.
 
 ![biLSTM](/resources/bi-directional_LSTM.png)
+
+## Generating Text
+
+We can use RNNs to generate text by feeding the previous output to the next timestep input.
+
+These are called `Autoregressive` models.
+
+To pick the word (from softmax output) we can use:
+
+- greedy method: the word with the highest propability 
+- sample: a random word weighted by its propability
+
+![generate_text](/resources/generate_text.png)
+
+> Drawback
+>
+> Once we choode a word, we cannot go back.
+
+### Beam Search Words
+
+We keep a history of the words.
+
+- We choose a beam size
+
+    this is the ammount of words we keep in each step
+- We predict based on greedy for all words
+- We choose the best option for each step
+
+![beam_search](/resources/beam_search.png)
+
+#### Hyperparameters
+
+- beam width: the ammount of words kept
+
+    - larger better results
+    - smaller faster but worse results
+
+    typically is 5-10
+
+- length normalization
+
+    because each words adds a negative log propability
+
+    beam search woulfd always choose smaller sentences
+
+    > Fix: divide the score by the length
+
+![beam_search_h](/resources/beam_search_h.png)
+
+#### Error Analysis
+
+We pinpoint the issue is on the model or the beam search
+
+![beam_search_assesment](/resources/beam_search_assesment.png)
+
+##### Metrics
+
+1. Billingual Evaluation Understudy Score (BLEU)
+
+We devide the:
+
+- count of times a bigram appears in the prediction by
+- most times it appears in any referance
+
+Example:
+
+![BLEU](/resources/BLEU.png)
+
+
+
